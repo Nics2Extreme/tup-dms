@@ -18,8 +18,7 @@
         </div>
     </div>
     <div class="row">
-            <a href="<?= site_url('dashboard'); ?>">Dashboard</a>
-            <a href="<?= site_url('register'); ?>">Register</a>
+            <a href="<?= site_url('user'); ?>">Dashboard</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
         <div class="col-md-8 offset-md-2">
              <table class="table">

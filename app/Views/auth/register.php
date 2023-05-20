@@ -17,8 +17,7 @@
         </div>
     </div>
         <div class="row" style="margin-top:45px">
-        <a href="<?= site_url('dashboard'); ?>">Dashboard</a>
-        <a href="<?= site_url('profile'); ?>">Profile</a>
+        <a href="<?= site_url('admin'); ?>">Dashboard</a>
         <a href="<?= site_url('logout'); ?>">Logout</a>
             <div class="col-md-4 col-md-offset-4 py-5">
                 <h4>Sign Up</h4>

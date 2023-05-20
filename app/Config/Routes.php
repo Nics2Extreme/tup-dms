@@ -49,9 +49,16 @@ $routes->post('/check', 'Auth::postCheck');
 $routes->post('/save', 'Dashboard::postSave');
 
 $routes->group('',['filter' => 'AuthCheck'], function($routes){
-    $routes->get('/dashboard', 'Dashboard::getIndex');
-    $routes->get('/profile', 'Dashboard::getProfile');
-    $routes->get('/register', 'Dashboard::getRegister');
+
+    $routes->group('',['filter' => 'UserFilter'], function($routes){
+        $routes->get('/user', 'Dashboard::getUserDashboard');
+        $routes->get('/profile', 'Dashboard::getUserProfile');
+    });
+
+    $routes->group('',['filter' => 'AdminFilter'], function($routes){
+        $routes->get('/admin', 'Dashboard::getAdminDashboard');
+        $routes->get('/register', 'Dashboard::getRegister');
+    });
 });
 
 /*

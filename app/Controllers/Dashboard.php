@@ -22,7 +22,7 @@ class Dashboard extends BaseController
         return view('auth/register', $data);
     }
 
-    public function getIndex()
+    public function getAdminDashboard()
     {
         $usersModel = new \App\Models\Users();
         $loggedUserId = session()->get('loggedUser');
@@ -32,10 +32,23 @@ class Dashboard extends BaseController
             'userInfo' => $userInfo
         ];
         
-        return view('dashboard/dashboard', $data);
+        return view('dashboard/admin/dashboard', $data);
     }
 
-    public function getProfile(){
+    public function getUserDashboard()
+    {
+        $usersModel = new \App\Models\Users();
+        $loggedUserId = session()->get('loggedUser');
+        $userInfo = $usersModel->find($loggedUserId);
+        $data = [
+            'title' => 'Dashboard',
+            'userInfo' => $userInfo
+        ];
+        
+        return view('dashboard/user/userdashboard', $data);
+    }
+
+    public function getUserProfile(){
         $usersModel = new \App\Models\Users();
         $loggedUserId = session()->get('loggedUser');
         $userInfo = $usersModel->find($loggedUserId);
@@ -44,7 +57,7 @@ class Dashboard extends BaseController
             'userInfo' => $userInfo
         ];
         
-        return view('dashboard/profile', $data);
+        return view('dashboard/user/profile', $data);
     }
 
     public function postSave(){

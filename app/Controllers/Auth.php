@@ -47,10 +47,19 @@ class Auth extends BaseController
             if( !$check_password ){
                 return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorect password.')->withInput();
             }else{
-                $user_id = $user_info['id'];
-                session()->set('loggedUser', $user_id);
-                return  redirect()->to('dashboard', null, 'refresh');
-
+                if($user_info['role'] === 'admin'){
+                    $user_id = $user_info['id'];
+                    $user_role = $user_info['role'];
+                    session()->set('loggedUser', $user_id);
+                    session()->set('userRole', $user_role);
+                    return  redirect()->to('admin', null, 'refresh');
+                }else{
+                    $user_id = $user_info['id'];
+                    $user_role = $user_info['role'];
+                    session()->set('loggedUser', $user_id);
+                    session()->set('userRole', $user_role);
+                    return  redirect()->to('user', null, 'refresh');
+                }
             }
         }
     }
