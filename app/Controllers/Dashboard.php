@@ -1,16 +1,20 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\Users;
+use App\Models\Documents;
 use App\Libraries\Hash;
 
 class Dashboard extends BaseController
 {
-    public function __construct(){
-        helper(['url','form']);
+    public function __construct()
+    {
+        helper(['url', 'form']);
     }
 
-    public function getRegister(){
+    public function getRegister()
+    {
         $usersModel = new \App\Models\Users();
         $loggedUserId = session()->get('loggedUser');
         $userInfo = $usersModel->find($loggedUserId);
@@ -18,7 +22,7 @@ class Dashboard extends BaseController
             'title' => 'Register',
             'userInfo' => $userInfo
         ];
-        
+
         return view('auth/register', $data);
     }
 
@@ -27,11 +31,12 @@ class Dashboard extends BaseController
         $usersModel = new \App\Models\Users();
         $loggedUserId = session()->get('loggedUser');
         $userInfo = $usersModel->find($loggedUserId);
+
         $data = [
             'title' => 'Dashboard',
-            'userInfo' => $userInfo
+            'userInfo' => $userInfo,
         ];
-        
+
         return view('dashboard/admin/dashboard', $data);
     }
 
@@ -44,11 +49,12 @@ class Dashboard extends BaseController
             'title' => 'Dashboard',
             'userInfo' => $userInfo
         ];
-        
+
         return view('dashboard/user/userdashboard', $data);
     }
 
-    public function getUserProfile(){
+    public function getUserProfile()
+    {
         $usersModel = new \App\Models\Users();
         $loggedUserId = session()->get('loggedUser');
         $userInfo = $usersModel->find($loggedUserId);
@@ -56,17 +62,18 @@ class Dashboard extends BaseController
             'title' => 'Profile',
             'userInfo' => $userInfo
         ];
-        
+
         return view('dashboard/user/profile', $data);
     }
 
-    public function postSave(){
+    public function postSave()
+    {
 
         $validation = $this->validate([
             'name' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'This field is required' 
+                    'required' => 'This field is required'
                 ]
             ],
             'email' => [
@@ -80,7 +87,7 @@ class Dashboard extends BaseController
             'role' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'This field is required' 
+                    'required' => 'This field is required'
                 ]
             ],
             'password' => [
@@ -100,30 +107,30 @@ class Dashboard extends BaseController
                     'matches' => 'Confirmed password does not match'
                 ]
             ]
-            
+
         ]);
 
-        if(!$validation){
+        if (!$validation) {
             return view('auth/register', ['validation' => $this->validator]);
-        }else{
+        } else {
             $name = $this->request->getPost('name');
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $role = $this->request->getPost('role');
 
             $values = [
-               'name'=>$name,
-               'email'=>$email,
-               'role'=>$role,
-               'password'=>Hash::make($password),
+                'name' => $name,
+                'email' => $email,
+                'role' => $role,
+                'password' => Hash::make($password),
             ];
 
 
             $userModel = new Users();
             $query = $userModel->insert($values);
-            if( !$query ){
+            if (!$query) {
                 return  redirect()->to('register')->with('fail', 'Something went wrong.');
-            }else{
+            } else {
                 return redirect()->to('register')->with('success', 'User successfully registered.');
             }
         }

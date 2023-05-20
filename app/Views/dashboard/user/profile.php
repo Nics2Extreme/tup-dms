@@ -18,6 +18,7 @@
         </div>
     </div>
     <div class="row">
+            <a href="<?= site_url('compose'); ?>">Compose</a>
             <a href="<?= site_url('user'); ?>">Dashboard</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
         <div class="col-md-8 offset-md-2">

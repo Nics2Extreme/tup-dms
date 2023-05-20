@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\Users;
 use App\Libraries\Hash;
 
 class Auth extends BaseController
 {
-    public function __construct(){
-        helper(['url','form']);
+    public function __construct()
+    {
+        helper(['url', 'form']);
     }
 
     public function getLogin()
@@ -15,7 +17,8 @@ class Auth extends BaseController
         return view('auth/login');
     }
 
-    function postCheck(){
+    function postCheck()
+    {
         $validation = $this->validate([
             'email' => [
                 'rules'  => 'required|valid_email|is_not_unique[users.email]',
@@ -35,39 +38,44 @@ class Auth extends BaseController
             ],
         ]);
 
-        if(!$validation){
+        if (!$validation) {
             return view('auth/login', ['validation' => $this->validator]);
-        }else{
+        } else {
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $userModel = new Users();
             $user_info = $userModel->where('email', $email)->first();
 
             $check_password = Hash::check($password, $user_info['password']);
-            if( !$check_password ){
+            if (!$check_password) {
                 return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorect password.')->withInput();
-            }else{
-                if($user_info['role'] === 'admin'){
-                    $user_id = $user_info['id'];
-                    $user_role = $user_info['role'];
-                    session()->set('loggedUser', $user_id);
-                    session()->set('userRole', $user_role);
+            } else {
+                if ($user_info['role'] === 'admin') {
+                    $user = array(
+                        'loggedUser' => $user_info['id'],
+                        'name' => $user_info['name'],
+                        'userRole' => $user_info['role']
+                    );
+                    session()->set($user);
                     return  redirect()->to('admin', null, 'refresh');
-                }else{
-                    $user_id = $user_info['id'];
-                    $user_role = $user_info['role'];
-                    session()->set('loggedUser', $user_id);
-                    session()->set('userRole', $user_role);
+                } else {
+                    $user = array(
+                        'loggedUser' => $user_info['id'],
+                        'name' => $user_info['name'],
+                        'userRole' => $user_info['role']
+                    );
+                    session()->set($user);
                     return  redirect()->to('user', null, 'refresh');
                 }
             }
         }
     }
 
-    public function getLogout(){
-        if( session()->has('loggedUser') ){
-           session()->remove('loggedUser');
-           return redirect()->to('login?access=out')->with('fail', 'You are now logged out.');
+    public function getLogout()
+    {
+        if (session()->has('loggedUser')) {
+            session()->remove('loggedUser');
+            return redirect()->to('login?access=out')->with('fail', 'You are now logged out.');
         }
-   }
+    }
 }

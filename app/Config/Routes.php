@@ -29,10 +29,9 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->add('/login', function() {
+$routes->add('/login', function () {
 
-    helper(['url','form']);
+    helper(['url', 'form']);
 
     // Check if user is already logged in
     if (session()->get('loggedUser')) {
@@ -48,15 +47,19 @@ $routes->get('/logout', 'Auth::getLogout');
 $routes->post('/check', 'Auth::postCheck');
 $routes->post('/save', 'Dashboard::postSave');
 
-$routes->group('',['filter' => 'AuthCheck'], function($routes){
+$routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
 
-    $routes->group('',['filter' => 'UserFilter'], function($routes){
+    $routes->get('/compose', 'FileUpload::getIndex');
+    $routes->post('/upload', 'FileUpload::upload');
+
+    $routes->group('', ['filter' => 'UserFilter'], function ($routes) {
         $routes->get('/user', 'Dashboard::getUserDashboard');
         $routes->get('/profile', 'Dashboard::getUserProfile');
     });
 
-    $routes->group('',['filter' => 'AdminFilter'], function($routes){
+    $routes->group('', ['filter' => 'AdminFilter'], function ($routes) {
         $routes->get('/admin', 'Dashboard::getAdminDashboard');
+        $routes->match(['get', 'post'], 'Documents/fetch', 'Documents::fetch');
         $routes->get('/register', 'Dashboard::getRegister');
     });
 });

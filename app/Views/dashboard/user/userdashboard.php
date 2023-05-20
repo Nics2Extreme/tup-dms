@@ -18,7 +18,8 @@
         </div>
     </div>
     <div class="row">
-        <a href="<?= site_url('userprofile'); ?>">Profile</a>
+        <a href="<?= site_url('compose'); ?>">Compose</a>
+        <a href="<?= site_url('profile'); ?>">Profile</a>
         <a href="<?= site_url('logout'); ?>">Logout</a>
         <div class="col-md-8 offset-md-2">
              <h1>Welcome <?= $userInfo['name']; ?>!</h1>
