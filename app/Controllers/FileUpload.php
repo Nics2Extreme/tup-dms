@@ -31,12 +31,13 @@ class FileUpload extends BaseController
         ]);
 
         if (!$input) {
-            print_r('Choose a valid file');
+            return redirect()->back()->with('fail', 'Please upload a file.');
         } else {
             $sender = $this->request->getPost('sender');
             $receipient = $this->request->getPost('receipient');
             $subject = $this->request->getPost('subject');
             $description = $this->request->getPost('description');
+            $type = "document";
             $img = $this->request->getFile('file');
             $img->move(WRITEPATH . 'uploads');
 
@@ -55,14 +56,15 @@ class FileUpload extends BaseController
                 'receipient' => $receipient,
                 'subject' => $subject,
                 'description' => $description,
+                'action' => $type
             ];
 
             $documentModel = new Documents();
             $query = $documentModel->insert($values);
             if (!$query) {
-                return  redirect()->to('compose')->with('fail', 'Something went wrong.');
+                return  redirect()->back()->with('fail', 'Something went wrong.');
             } else {
-                return redirect()->to('compose')->with('success', 'Document successfully created.');
+                return redirect()->back()->with('success', 'Document successfully created.');
             }
         }
     }

@@ -22,6 +22,7 @@
         </div>
         <div class="row">
             <a href="<?= site_url('compose'); ?>">Compose</a>
+            <a href="<?= site_url('request'); ?>">Request</a>
             <a href="<?= site_url('register'); ?>">Register</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
             <div class="col-md-8 offset-md-2">
@@ -33,8 +34,8 @@
                         <th scope="col-2">Doc. Code</th>
                         <th scope="col-4">Sender</th>
                         <th scope="col-4">Details</th>
-                        <th scope="col-4">Required Actions</th>
-                        <th scope="col-4">Date of Letter</th>
+                        <th scope="col-4">Type</th>
+                        <th scope="col-4">Date</th>
                         <th scope="col-4">Status</th>
                         <th scope="col-4">Actions</th>
                     </thead>
@@ -60,9 +61,9 @@
                                     <td scope="row">${value["id"]}</td>
                                     <td>${value["sender"]}</td>
                                     <td>${value["description"]}</td>
-                                    <td>Insert action</td>
-                                    <td>Insert date</td>
-                                    <td>Insert Status</td>
+                                    <td>${value["action"]}</td>
+                                    <td>${value["createdAt"]}</td>
+                                    <td>${value["status"] === "0" ? "Pending" : "Received"}</td>
                                     <td>
                                         <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn">View</a>
                                     </td>

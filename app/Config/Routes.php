@@ -52,13 +52,17 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->post('/upload', 'FileUpload::upload');
     $routes->get('/download/(:segment)', 'FileUpload::download/$1');
     $routes->get('/find/(:segment)', 'DocumentController::getDocument/$1');
+    $routes->get('/users', 'Auth::getUsers');
     $routes->post('/receive', 'DocumentController::receive');
+    $routes->post('/request', 'DocumentController::request');
+    $routes->post('/send', 'DocumentController::send');
 
     $routes->group('', ['filter' => 'UserFilter'], function ($routes) {
         $routes->get('/user/(:segment)', 'Dashboard::getUserDashboard');
         $routes->get('/usercompose', 'FileUpload::getUserCompose');
         $routes->get('/profile', 'Dashboard::getUserProfile');
         $routes->get('/userdocument/(:segment)', 'DocumentController::getUserDocument/$1');
+        $routes->get('/userrequest', 'DocumentController::getUserRequest');
         $routes->get('/documents/(:segment)', 'DocumentController::getUserDocuments/$1');
     });
 
@@ -66,6 +70,7 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
         $routes->get('/admin', 'Dashboard::getAdminDashboard');
         $routes->get('/compose', 'FileUpload::getAdminCompose');
         $routes->get('/register', 'Dashboard::getRegister');
+        $routes->get('/request', 'DocumentController::getAdminRequest');
         $routes->get('/document/(:segment)', 'DocumentController::getAdminDocument/$1');
         $routes->get('/documents', 'DocumentController::getDocuments');
     });

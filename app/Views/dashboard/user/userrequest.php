@@ -20,12 +20,12 @@
         </div>
 
         <div class="row">
+            <a href="<?= site_url('usercompose'); ?>">Compose</a>
             <a href="<?= site_url(session()->get('userRole')); ?>/<?= session()->get('loggedUser'); ?>">Dashboard</a>
-            <a href="<?= site_url('userrequest'); ?>">Request</a>
             <a href="<?= site_url('profile'); ?>">Profile</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
             <div class="col-md-4 col-md-offset-4 py-5">
-                <h4>Create Document</h4>
+                <h4>Request Document</h4>
                 <?= csrf_field(); ?>
                 <?php if (!empty(session()->getFlashdata('fail'))) : ?>
                     <div class="alert alert-danger"><?= session()->getFlashdata('fail') ?></div>
@@ -34,7 +34,7 @@
                 <?php if (!empty(session()->getFlashdata('success'))) : ?>
                     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
                 <?php endif ?>
-                <form method="post" action="<?php echo base_url('upload'); ?>" enctype="multipart/form-data">
+                <form method="post" action="<?php echo base_url('request'); ?>" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Receipient</label>
                         <input type="text" class="form-control" name="sender" value="<?= session()->get('name') ?>" hidden />
@@ -51,11 +51,7 @@
                         <input type="text" class="form-control" name="description" required />
                     </div>
                     <div class="form-group">
-                        <label>Upload File</label>
-                        <input type="file" name="file" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-danger">Upload</button>
+                        <button type="submit" class="btn btn-danger">Request</button>
                     </div>
             </div>
             </form>

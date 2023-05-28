@@ -71,6 +71,13 @@ class Auth extends BaseController
         }
     }
 
+    function getUsers()
+    {
+        $usersModel = new \App\Models\Users;
+        $query['users'] = $usersModel->findAll();
+        return $this->response->setJSON($query);
+    }
+
     public function getLogout()
     {
         if (session()->has('loggedUser')) {
