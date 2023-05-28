@@ -51,8 +51,9 @@
                 method: "GET",
                 url: apiUrl,
                 success: function(response) {
+                    console.log(response.document.status);
                     $("#document").html(`
-                    <input type="text" name="id" class="form-control" value=${response.document.id} >
+                    <input type="text" name="id" class="form-control" value=${response.document.id} hidden />
                     <div class="form-group">
                       <div class="col">
                         <label for="subject">Subject</label>
@@ -71,19 +72,23 @@
                             <input type="text" id="dender" class="form-control" value=${response.document.sender} disabled />
                         </div>
                         <div class="col">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" class="form-control" value=${response.document.name} disabled />
+                            <label for="name">Status</label>
+                            <input type="text" id="name" class="form-control" value=${response.document.status === 1 ? "Received" : "Pending"} disabled />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col" id="download"></div>
+                    <div class="form-group" >
+                      <div class="col">
+                        <label for="attachment">Attachment</label>
+                      </div>
+                      <div class="col">
+                        <span>${response.document.name}</span>
+                        <a href="<?= site_url('download') ?>/${response.document.name}" target="_blank">Download</a>
+                      </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" type="submit">Set as Received</button>
                     </div>
                     `);
-
-                    //create conditional render
                 }
             })
         }

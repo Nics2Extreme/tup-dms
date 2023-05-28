@@ -48,7 +48,7 @@ class DocumentController extends BaseController
         $data = [
             'status' => 1
         ];
-        $result = $documentModel->update($id, $data);
-        return $this->response->setJSON($result);
+        $documentModel->update($id, $data);
+        return redirect()->back()->with('success', 'User successfully registered.');
     }
 }
