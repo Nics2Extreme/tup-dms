@@ -3,12 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\Documents;
+use App\Models\Users;
 
 class FileUpload extends BaseController
 {
-    public function getIndex()
+    function getAdminCompose()
     {
-        return view('home');
+        return view('dashboard/admin/create');
+    }
+
+    function getUserCompose()
+    {
+        return view('dashboard/user/usercreate');
     }
 
     function upload()
@@ -33,10 +39,19 @@ class FileUpload extends BaseController
             $description = $this->request->getPost('description');
             $img = $this->request->getFile('file');
             $img->move(WRITEPATH . 'uploads');
+
+            $userModel = new Users();
+            $query = $userModel->select('id')->where('name', $receipient)->find();
+            $data = [
+                'id' => $query[0]['id']
+            ];
+            $id = $data['id'];
+
             $values = [
                 'name' =>  $img->getName(),
                 'type'  => $img->getClientMimeType(),
                 'sender' => $sender,
+                'receipient_id' => $id,
                 'receipient' => $receipient,
                 'subject' => $subject,
                 'description' => $description,
@@ -49,6 +64,27 @@ class FileUpload extends BaseController
             } else {
                 return redirect()->to('compose')->with('success', 'Document successfully created.');
             }
+        }
+    }
+
+    function download($name)
+    {
+        $file = WRITEPATH . 'uploads/' . $name;
+
+        if (is_file($file)) {
+            $mime = mime_content_type($file);
+
+            // Set the appropriate headers
+            header('Content-Type: ' . $mime);
+            header('Content-Disposition: attachment; filename=' . $name);
+            header('Content-Length: ' . filesize($file));
+
+            // Output the file content
+            readfile($file);
+            exit();
+        } else {
+            // PDF file not found, handle error
+            echo 'PDF file not found.';
         }
     }
 }

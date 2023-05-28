@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard | Home</title>
     <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -28,10 +28,52 @@
                 <h1>Welcome <?= $userInfo['name']; ?>!</h1>
             </div>
             <div class="col-md-8 offset-md-2">
-
+                <table class="table table-dark">
+                    <thead>
+                        <th scope="col-2">Doc. Code</th>
+                        <th scope="col-4">Sender</th>
+                        <th scope="col-4">Details</th>
+                        <th scope="col-4">Required Actions</th>
+                        <th scope="col-4">Date of Letter</th>
+                        <th scope="col-4">Status</th>
+                        <th scope="col-4">Actions</th>
+                    </thead>
+                    <tbody id="documents"></tbody>
+                </table>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            loadDocuments();
+        });
+
+        function loadDocuments() {
+            $.ajax({
+                method: "GET",
+                url: "/documents",
+                success: function(response) {
+                    $.each(response.documents, function(key, value) {
+                        $("#documents").append(
+                            `
+                                <tr>
+                                    <td scope="row">${value["id"]}</td>
+                                    <td>${value["sender"]}</td>
+                                    <td>${value["description"]}</td>
+                                    <td>Insert action</td>
+                                    <td>Insert date</td>
+                                    <td>Insert Status</td>
+                                    <td>
+                                        <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn">View</a>
+                                    </td>
+                                </tr>
+                            `
+                        )
+                    });
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

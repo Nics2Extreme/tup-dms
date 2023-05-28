@@ -8,5 +8,5 @@ class Documents extends Model
 {
     protected $table      = 'files';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'type', 'sender', 'receipient', 'subject', 'description'];
+    protected $allowedFields = ['name', 'type', 'sender', 'receipient', 'receipient_id', 'subject', 'description', 'status'];
 }

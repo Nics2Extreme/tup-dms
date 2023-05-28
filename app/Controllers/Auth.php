@@ -65,7 +65,7 @@ class Auth extends BaseController
                         'userRole' => $user_info['role']
                     );
                     session()->set($user);
-                    return  redirect()->to('user', null, 'refresh');
+                    return  redirect()->to('user/' . $user['loggedUser'], null, 'refresh');
                 }
             }
         }
