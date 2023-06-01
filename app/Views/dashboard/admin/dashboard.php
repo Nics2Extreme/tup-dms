@@ -6,45 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard | Home</title>
-    <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 bg-success" style="margin-top:30px">
-                <div class="text-center p-4 font-bold text-white">
+    
+    <div class="container mx-auto flex">
+        <div class="w-60 h-screen p-4">
+            <!-- Sidebar content here -->
+            <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+        </div>
+        <div class="ml-8 flex-grow">
+            <div class="flex justify-center mt-8">
+                <div class="bg-green-500 p-4 font-bold text-white rounded-md">
                     Dashboard
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <a href="<?= site_url('compose'); ?>">Compose</a>
-            <a href="<?= site_url('register'); ?>">Register</a>
-            <a href="<?= site_url('logout'); ?>">Logout</a>
-            <div class="col-md-8 offset-md-2">
-                <h1>Welcome <?= $userInfo['name']; ?>!</h1>
+            <!-- <div class="flex justify-center mt-4">
+                <a href="<?= site_url('compose'); ?>" class="mr-2">Compose</a>
+                <a href="<?= site_url('register'); ?>" class="mr-2">Register</a>
+                <a href="<?= site_url('logout'); ?>">Logout</a>
+            </div> -->
+            <div class="flex justify-center mt-8">
+                <div class="col-span-8 ">
+                    <h1 class="text-black font-mono text-lg">Welcome
+                        <?= $userInfo['name']; ?>!
+                    </h1>
+                </div>
             </div>
-            <div class="col-md-8 offset-md-2">
-                <table class="table table-dark">
+            <div class="flex justify-center mt-8">
+                <table class="table-auto bg-slate-200 w-full rounded-md overflow-hidden shadow-lg border-2 border-slate-300">
                     <thead>
-                        <th scope="col-2">Doc. Code</th>
-                        <th scope="col-4">Sender</th>
-                        <th scope="col-4">Details</th>
-                        <th scope="col-4">Required Actions</th>
-                        <th scope="col-4">Date of Letter</th>
-                        <th scope="col-4">Status</th>
-                        <th scope="col-4">Actions</th>
+                        <tr>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Doc. Code</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Sender</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Details</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Required Actions</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Date of Letter</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Status</th>
+                            <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Actions</th>
+                        </tr>
                     </thead>
-                    <tbody id="documents"></tbody>
+                    <tbody id="documents">
+                        <!-- Table rows here -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+
+
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadDocuments();
         });
 
@@ -52,8 +69,8 @@
             $.ajax({
                 method: "GET",
                 url: "/documents",
-                success: function(response) {
-                    $.each(response.documents, function(key, value) {
+                success: function (response) {
+                    $.each(response.documents, function (key, value) {
                         $("#documents").append(
                             `
                                 <tr>
