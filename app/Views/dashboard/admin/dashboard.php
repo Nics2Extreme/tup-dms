@@ -23,12 +23,20 @@
         <div class="row">
             <a href="<?= site_url('compose'); ?>">Compose</a>
             <a href="<?= site_url('request'); ?>">Request</a>
+            <a href="<?= site_url('view_trash'); ?>">Trash</a>
             <a href="<?= site_url('register'); ?>">Register</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
             <div class="col-md-8 offset-md-2">
                 <h1>Welcome <?= $userInfo['name']; ?>!</h1>
             </div>
             <div class="col-md-8 offset-md-2">
+                <?php if (!empty(session()->getFlashdata('error'))) : ?>
+                    <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                <?php endif ?>
+
+                <?php if (!empty(session()->getFlashdata('success'))) : ?>
+                    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+                <?php endif ?>
                 <table class="table table-dark">
                     <thead>
                         <th scope="col-2">Doc. Code</th>
@@ -55,26 +63,28 @@
                 url: "/documents",
                 success: function(response) {
                     $.each(response.documents, function(key, value) {
-                        $("#documents").append(
-                            `
-                                <tr>
-                                    <td scope="row">${value["id"]}</td>
-                                    <td>${value["sender"]}</td>
-                                    <td>${value["description"]}</td>
-                                    <td>${value["action"]}</td>
-                                    <td>${value["createdAt"]}</td>
-                                    <td>${value["status"] === "0" ? "Pending" : "Received"}</td>
-                                    <td>
-                                        <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn">View</a>
-                                    </td>
-                                </tr>
-                            `
-                        )
+                        if (value.status !== "2") {
+                            $("#documents").append(
+                                `
+                                    <tr>
+                                        <td scope="row">${value["id"]}</td>
+                                        <td>${value["sender"]}</td>
+                                        <td>${value["description"]}</td>
+                                        <td>${value["action"]}</td>
+                                        <td>${value["createdAt"]}</td>
+                                        <td>${value["status"] === "0" ? "Pending" : "Received"}</td>
+                                        <td>
+                                            <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn">View</a>
+                                            <a href="<?= site_url('trash-document'); ?>/${value["id"]}" class="badge btn-info view_btn">Trash</a>
+                                        </td>
+                                    </tr>
+                                `
+                            )
+                        }
                     });
                 }
             })
         }
     </script>
 </body>
-
 </html>

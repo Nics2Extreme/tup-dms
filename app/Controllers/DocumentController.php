@@ -28,6 +28,16 @@ class DocumentController extends BaseController
         return view('dashboard/admin/request');
     }
 
+    public function getAdminTrash()
+    {
+        return view('dashboard/admin/trash-document');
+    }
+
+    public function viewTrash()
+    {
+        return view('dashboard/admin/trash');
+    }
+
     function getDocument($id)
     {
         $documentModel = new \App\Models\Documents;
@@ -75,8 +85,8 @@ class DocumentController extends BaseController
         $description = $this->request->getPost('description');
         $type = "request";
 
-        $userModel = new Users();
-        $query = $userModel->select('id')->where('name', $receipient)->find();
+        $documentsModel = new Users();
+        $query = $documentsModel->select('id')->where('name', $receipient)->find();
         $data = [
             'id' => $query[0]['id']
         ];
@@ -134,5 +144,57 @@ class DocumentController extends BaseController
                 return redirect()->back()->with('success', 'Document successfully created.');
             }
         }
+    }
+
+    function getTrash($name)
+    {
+        $documentModel = new \App\Models\Documents;
+        $query['documents'] = $documentModel->where('receipient_id', $name)->findAll();
+
+        return $this->response->setJSON($query);
+    }
+
+    function trash_document()
+    {
+        $id = $this->request->getPost('id');
+        $documentModel = new Documents;
+        $data = [
+            'status' => 2
+        ];
+        $result = $documentModel->where('id', $id)->update($id, $data);
+        print_r($result);
+        return redirect()->to(base_url('/admin'))->with('success', 'Successfully transfered to trash.');
+    }
+
+    function retrieve_document()
+    {
+        $id = $this->request->getPost('id');
+        $documentModel = new Documents;
+        $data = [
+            'status' => 1
+        ];
+        $result = $documentModel->where('id', $id)->update($id, $data);
+        print_r($result);
+        return redirect()->back()->with('success', 'Successfully retreived.');
+    }
+
+    function delete_document()
+    {
+        $id = $this->request->getPost('id');
+        $documentModel = new Documents;
+
+        $document = $documentModel->find($id);
+
+        if (!$document) {
+            return redirect()->back()->with('error', 'Document not found.');
+        }
+
+        $result = $documentModel->delete($id);
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Failed to delete.');
+        }
+
+        return redirect()->back()->with('success', 'Document deleted successfully.');
     }
 }

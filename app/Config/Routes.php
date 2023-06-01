@@ -73,6 +73,12 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
         $routes->get('/request', 'DocumentController::getAdminRequest');
         $routes->get('/document/(:segment)', 'DocumentController::getAdminDocument/$1');
         $routes->get('/documents', 'DocumentController::getDocuments');
+        $routes->get('/trash', 'DocumentController::getTrash');
+        $routes->get('/trash-document/(:segment)', 'DocumentController::getAdminTrash/$1');
+        $routes->post('/trash-document', 'DocumentController::trash_document');
+        $routes->get('/view_trash', 'DocumentController::viewTrash');
+        $routes->post('/retrieve-document', 'DocumentController::retrieve_document');
+        $routes->post('/delete-document', 'DocumentController::delete_document');
     });
 });
 
