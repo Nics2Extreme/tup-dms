@@ -21,6 +21,7 @@
         </div>
         <div class="row">
             <a href="<?= site_url('usercompose'); ?>">Compose</a>
+            <a href="<?= site_url('userrequest'); ?>">Request</a>
             <a href="<?= site_url('user'); ?>/<?= session()->get('loggedUser') ?>">Dashboard</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
             <div class="col-md-8 offset-md-2">

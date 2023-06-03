@@ -21,7 +21,8 @@
             </div>
         </div>
         <div class="row">
-            <a href="<?= site_url('compose'); ?>">Compose</a>
+            <a href="<?= site_url('usercompose'); ?>">Compose</a>
+            <a href="<?= site_url('userrequest'); ?>">Request</a>
             <a href="<?= site_url('user'); ?>/<?= session()->get("loggedUser") ?>">Dashboard</a>
             <a href="<?= site_url('profile'); ?>">Profile</a>
             <a href="<?= site_url('logout'); ?>">Logout</a>
@@ -35,7 +36,7 @@
             <?php if (!empty(session()->getFlashdata('success'))) : ?>
                 <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
             <?php endif ?>
-            <form id="document" method="post" action="<?php echo base_url('receive'); ?>" enctype="multipart/form-data"></form>
+            <div id="document"></div>
         </div>
     </div>
     <script>
@@ -51,39 +52,98 @@
                 method: "GET",
                 url: apiUrl,
                 success: function(response) {
-                    $("#document").html(`
-                    <input type="text" name="id" class="form-control" value=${response.document.id} >
+                    if (response.document.action === 'document') {
+                        $("#document").html(`
+                        <div id="download"></div>
+                    <form method="post" action="<?php echo base_url('receive'); ?>" enctype="multipart/form-data">
+                        <input type="text" name="id" class="form-control" value="${response.document.id}" hidden />
                     <div class="form-group">
                       <div class="col">
                         <label for="subject">Subject</label>
-                        <input type="text" id="subject" class="form-control" value=${response.document.subject} disabled />
+                        <input type="text" id="subject" class="form-control" value="${response.document.subject}" disabled />
                       </div>
                     </div>
                     <div class="form-group">
                       <div class="col">
                         <label for="description">Description</label>
-                        <input type="text" id="description" class="form-control" value=${response.document.description} disabled />
+                        <input type="text" id="description" class="form-control" value="${response.document.description}" disabled />
                       </div>
                     </div>
                     <div class="form-group">
                         <div class="col">
                             <label for="sender">Sender</label>
-                            <input type="text" id="dender" class="form-control" value=${response.document.sender} disabled />
+                            <input type="text" id="sender" class="form-control" value="${response.document.sender}" disabled />
                         </div>
-                        <div class="col">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" class="form-control" value=${response.document.name} disabled />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col" id="download"></div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" type="submit">Set as Received</button>
                     </div>
+                    </form>
                     `);
 
-                    //create conditional render
+                        if (response.document.status === "1") {
+                            $('#download').append(`
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="attachment">Attachment</label>
+                            </div>
+                            <div class="col">
+                                <span>${response.document.name}</span>
+                                <a href="<?= site_url('download') ?>/${response.document.name}" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        `);
+                        }
+
+                    } else {
+                        $("#document").html(`
+                        <div id="download"></div>
+                        <form method="post" action="<?php echo base_url('send'); ?>" enctype="multipart/form-data">
+                    <input type="text" name="id" class="form-control" value="${response.document.id}" hidden />
+                    <div class="form-group">
+                      <div class="col">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" value="${response.document.subject}" disabled />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" class="form-control" value="${response.document.description}" disabled />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col">
+                            <label for="sender">Sender</label>
+                            <input type="text" id="dender" class="form-control" value="${response.document.sender}" disabled />
+                        </div>
+                    </div>
+                    <div class="form-group" id="upload">
+                        <label>Upload File</label>
+                        <input type="file" name="file" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block" type="submit">Send Document</button>
+                    </div>
+                    </form>
+                    `);
+                        if (response.document.status === "1") {
+                            $('#download').append(`
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="attachment">Attachment</label>
+                            </div>
+                            <div class="col">
+                                <span>${response.document.name}</span>
+                                <a href="<?= site_url('download') ?>/${response.document.name}" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        `);
+
+                            $('#upload').hide();
+                        }
+
+                    }
                 }
             })
         }

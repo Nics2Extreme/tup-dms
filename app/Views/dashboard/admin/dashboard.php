@@ -24,6 +24,7 @@
                     Dashboard
                 </div>
             </div>
+<<<<<<< HEAD
             <!-- <div class="flex justify-center mt-4">
                 <a href="<?= site_url('compose'); ?>" class="mr-2">Compose</a>
                 <a href="<?= site_url('register'); ?>" class="mr-2">Register</a>
@@ -48,6 +49,35 @@
                             <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Status</th>
                             <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Actions</th>
                         </tr>
+=======
+        </div>
+        <div class="row">
+            <a href="<?= site_url('compose'); ?>">Compose</a>
+            <a href="<?= site_url('request'); ?>">Request</a>
+            <a href="<?= site_url('view_trash'); ?>">Trash</a>
+            <a href="<?= site_url('register'); ?>">Register</a>
+            <a href="<?= site_url('logout'); ?>">Logout</a>
+            <div class="col-md-8 offset-md-2">
+                <h1>Welcome <?= $userInfo['name']; ?>!</h1>
+            </div>
+            <div class="col-md-8 offset-md-2">
+                <?php if (!empty(session()->getFlashdata('error'))) : ?>
+                    <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                <?php endif ?>
+
+                <?php if (!empty(session()->getFlashdata('success'))) : ?>
+                    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+                <?php endif ?>
+                <table class="table table-dark">
+                    <thead>
+                        <th scope="col-2">Doc. Code</th>
+                        <th scope="col-4">Sender</th>
+                        <th scope="col-4">Details</th>
+                        <th scope="col-4">Type</th>
+                        <th scope="col-4">Date</th>
+                        <th scope="col-4">Status</th>
+                        <th scope="col-4">Actions</th>
+>>>>>>> 4197850ed52b77ecc82608e22150db4f789c786f
                     </thead>
                     <tbody id="documents">
                         <!-- Table rows here -->
@@ -69,6 +99,7 @@
             $.ajax({
                 method: "GET",
                 url: "/documents",
+<<<<<<< HEAD
                 success: function (response) {
                     $.each(response.documents, function (key, value) {
                         $("#documents").append(
@@ -86,11 +117,32 @@
                                 </tr>
                             `
                         )
+=======
+                success: function(response) {
+                    $.each(response.documents, function(key, value) {
+                        if (value.status !== "2") {
+                            $("#documents").append(
+                                `
+                                    <tr>
+                                        <td scope="row">${value["id"]}</td>
+                                        <td>${value["sender"]}</td>
+                                        <td>${value["description"]}</td>
+                                        <td>${value["action"]}</td>
+                                        <td>${value["createdAt"]}</td>
+                                        <td>${value["status"] === "0" ? "Pending" : "Received"}</td>
+                                        <td>
+                                            <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn">View</a>
+                                            <a href="<?= site_url('trash-document'); ?>/${value["id"]}" class="badge btn-info view_btn">Trash</a>
+                                        </td>
+                                    </tr>
+                                `
+                            )
+                        }
+>>>>>>> 4197850ed52b77ecc82608e22150db4f789c786f
                     });
                 }
             })
         }
     </script>
 </body>
-
 </html>
