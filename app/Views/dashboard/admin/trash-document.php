@@ -6,89 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard | Trash</title>
-    <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
+
+    <!-- <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
-<body>
+<body ">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 ">
+            <!-- Sidebar content here -->
+            <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+        </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 bg-success" style="margin-top:30px">
-                <div class="text-center p-4 font-bold text-white">
-                    Dashboard
+        <!-- Main Content -->
+        <div class="flex-grow flex items-center justify-center">
+            <div class="w-1/2">
+                <div class="text-4xl font-bold mb-8 py-5 px-11 flex items-center justify-center">
+                    Trash <i class="bi bi-trash-fill"></i>
+                </div>
+
+                <div class="container mx-auto">
+                    <div id="download"></div>
+                    <form id="document" method="post" action="<?php echo base_url('trash-document'); ?>"></form>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <a href="<?= site_url('compose'); ?>">Compose</a>
-            <a href="<?= site_url('request'); ?>">Request</a>
-            <a href="<?= site_url('admin'); ?>">Dashboard</a>
-            <a href="<?= site_url('register'); ?>">Register</a>
-            <a href="<?= site_url('logout'); ?>">Logout</a>
-        </div>
-        <div class="container">
-            <div id="download"></div>
-            <form id="document" method="post" action="<?php echo base_url('trash-document'); ?>"></form>
-        </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            loadDocuments();
-        });
+</body>
 
-        function loadDocuments() {
-            var segment = window.location.pathname.split('/')[2];
-            var apiUrl = '/find/' + segment;
-            console.log(segment)
-            $.ajax({
-                method: "GET",
-                url: apiUrl,
-                success: function(response) {
-                        $("#document").html(`
+<script>
+    $(document).ready(function () {
+        loadDocuments();
+    });
+
+    function loadDocuments() {
+        var segment = window.location.pathname.split('/')[2];
+        var apiUrl = '/find/' + segment;
+        console.log(segment)
+        $.ajax({
+            method: "GET",
+            url: apiUrl,
+            success: function (response) {
+                $("#document").html(`
                         <div id="download"></div>
                         <form method="post" action="<?php echo base_url('trash-document'); ?>">
-                    <input type="text" name="id" class="form-control" value="${response.document.id}" hidden />
-                    <div class="form-group">
-                        <div class="col">
-                            <label for="sender">Document Code</label>
-                            <input type="text" id="sender" class="form-control" value="${response.document.id}" disabled />
-                        </div>
+                    <input type="text" name="id" class="hidden" value="${response.document.id}" />
+                    <div class="mb-4">
+                        <label for="sender" class="block text-sm font-medium text-gray-700 mb-2">Document Code</label>
+                        <input type="text" id="sender" class="form-input px-4 py-3 rounded-md border-gray-300 bg-gray-300 text-gray-800 w-full" value="${response.document.id}" disabled />
                     </div>
-                    <div class="form-group">
-                      <div class="col">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" class="form-control" value="${response.document.subject}" disabled />
-                      </div>
+                    <div class="mb-4">
+                      <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                      <input type="text" id="subject" class="form-input px-4 py-3 rounded-md border-gray-300 bg-gray-300 text-gray-800 w-full" value="${response.document.subject}" disabled />
                     </div>
-                    <div class="form-group">
-                      <div class="col">
-                        <label for="description">Description</label>
-                        <input type="text" id="description" class="form-control" value="${response.document.description}" disabled />
-                      </div>
+                    <div class="mb-4">
+                      <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                      <input type="text" id="description" class="form-input px-4 py-3 rounded-md border-gray-300 bg-gray-300 text-gray-800 w-full" value="${response.document.description}" disabled />
                     </div>
-                    <div class="form-group">
-                        <div class="col">
-                            <label for="sender">Sender</label>
-                            <input type="text" id="dender" class="form-control" value="${response.document.sender}" disabled />
-                        </div>
+                    <div class="mb-4">
+                        <label for="sender" class="block text-sm font-medium text-gray-700 mb-2">Sender</label>
+                        <input type="text" id="sender" class="form-input px-4 py-3 rounded-md border-gray-300 bg-gray-300 text-gray-800 w-full" value="${response.document.sender}" disabled />
                     </div>
-                    <div class="form-group">
-                        <div class="col">
-                            <label for="sender">Date Created</label>
-                            <input type="text" id="dender" class="form-control" value="${response.document.createdAt}" disabled />
-                        </div>
+                    <div class="mb-4">
+                        <label for="sender" class="block text-sm font-medium text-gray-700 mb-2">Date Created</label>
+                        <input type="text" id="sender" class="form-input px-4 py-3 rounded-md border-gray-300 bg-gray-300 text-gray-800 w-full" value="${response.document.createdAt}" disabled />
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block" type="submit">Trash Document</button>
+                    <div class="mt-8">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md w-full" type="submit">Trash Document</button>
                     </div>
                     </form>
                     `);
-                    }
-                
-            })
-        }
-    </script>
+            }
+        })
+    }
+</script>
 </body>
+
+
 
 </html>
