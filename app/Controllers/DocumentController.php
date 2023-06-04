@@ -53,14 +53,6 @@ class DocumentController extends BaseController
         return $this->response->setJSON($query);
     }
 
-    function getUserDocuments($name)
-    {
-        $documentModel = new \App\Models\Documents;
-        $query['documents'] = $documentModel->where('receipient_id', $name)->findAll();
-
-        return $this->response->setJSON($query);
-    }
-
     function receive()
     {
         $id = $this->request->getPost('id');
