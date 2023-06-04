@@ -43,30 +43,32 @@ class Auth extends BaseController
         } else {
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
+            $otp = $this->request->getPost('otp');
             $userModel = new Users();
             $user_info = $userModel->where('email', $email)->first();
+            $check_otp = $userModel->where('otp', $otp)->first();
 
             $check_password = Hash::check($password, $user_info['password']);
-            if (!$check_password) {
-                return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorect password.')->withInput();
+            if (!$check_password) return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorect password.')->withInput();
+
+            if (!$check_otp) return redirect()->to('login', null)->with('fail', 'Wrong code. Please check your mail to get the new valid code.');
+
+            if ($user_info['role'] === 'admin') {
+                $user = array(
+                    'loggedUser' => $user_info['id'],
+                    'name' => $user_info['name'],
+                    'userRole' => $user_info['role']
+                );
+                session()->set($user);
+                return  redirect()->to('admin', null, 'refresh');
             } else {
-                if ($user_info['role'] === 'admin') {
-                    $user = array(
-                        'loggedUser' => $user_info['id'],
-                        'name' => $user_info['name'],
-                        'userRole' => $user_info['role']
-                    );
-                    session()->set($user);
-                    return  redirect()->to('admin', null, 'refresh');
-                } else {
-                    $user = array(
-                        'loggedUser' => $user_info['id'],
-                        'name' => $user_info['name'],
-                        'userRole' => $user_info['role']
-                    );
-                    session()->set($user);
-                    return  redirect()->to('user/' . $user['loggedUser'], null, 'refresh');
-                }
+                $user = array(
+                    'loggedUser' => $user_info['id'],
+                    'name' => $user_info['name'],
+                    'userRole' => $user_info['role']
+                );
+                session()->set($user);
+                return  redirect()->to('user/' . $user['loggedUser'], null, 'refresh');
             }
         }
     }

@@ -46,11 +46,14 @@
                 method: "GET",
                 url: apiUrl,
                 success: function(response) {
+                    const fileName = 'image.png';
+                    
                     if (response.document.action === 'document') {
                         $("#document").html(`
                         <div id="download"></div>
                     <form method="post" action="<?php echo base_url('receive'); ?>" enctype="multipart/form-data">
                         <input type="text" name="id" class="form-control" value="${response.document.id}" hidden />
+                        <img src="<?= base_url('src/') ?>qrcode${response.document.id}.png" alt='qr' />
                     <div class="form-group">
                       <div class="col">
                         <label for="subject">Subject</label>
@@ -94,6 +97,7 @@
                         <div id="download"></div>
                         <form method="post" action="<?php echo base_url('send'); ?>" enctype="multipart/form-data">
                     <input type="text" name="id" class="form-control" value="${response.document.id}" hidden />
+                    <img src="<?= base_url('src/') ?>qrcode${response.document.id}.png" alt='qr' />
                     <div class="form-group">
                       <div class="col">
                         <label for="subject">Subject</label>

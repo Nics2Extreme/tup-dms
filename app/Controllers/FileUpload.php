@@ -5,6 +5,16 @@ namespace App\Controllers;
 use App\Models\Documents;
 use App\Models\Users;
 
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+
 class FileUpload extends BaseController
 {
     function getAdminCompose()
@@ -42,6 +52,7 @@ class FileUpload extends BaseController
             $img->move(WRITEPATH . 'uploads');
 
             $userModel = new Users();
+            $documentModel = new Documents();
             $query = $userModel->select('id')->where('name', $receipient)->find();
             $data = [
                 'id' => $query[0]['id']
@@ -56,11 +67,11 @@ class FileUpload extends BaseController
                 'receipient' => $receipient,
                 'subject' => $subject,
                 'description' => $description,
-                'action' => $type
+                'action' => $type,
             ];
-
-            $documentModel = new Documents();
             $query = $documentModel->insert($values);
+            $this->createQr($id);
+
             if (!$query) {
                 return  redirect()->back()->with('fail', 'Something went wrong.');
             } else {
@@ -88,5 +99,41 @@ class FileUpload extends BaseController
             // PDF file not found, handle error
             echo 'PDF file not found.';
         }
+    }
+
+    function createQr($id){
+            $documentModel = new Documents();
+            $query = $documentModel->select('id')->where('receipient_id', $id)->find();
+            $doc = [
+                'id' => $query[0]['id']
+            ];
+            $doc_id = $doc['id'];
+
+            $writer = new PngWriter();
+            $qrCode = QrCode::create(base_url('documents/' . $doc_id))
+                ->setEncoding(new Encoding('UTF-8'))
+                ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+                ->setSize(300)
+                ->setMargin(10)
+                ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->setForegroundColor(new Color(0, 0, 0))
+                ->setBackgroundColor(new Color(255, 255, 255));
+
+            // Create generic logo
+            $logo = Logo::create('cos.png')
+            ->setResizeToWidth(50);
+
+            $result = $writer->write($qrCode, $logo);
+
+            // Save it to a file
+            $result->saveToFile(ROOTPATH  . 'public/src/qrcode' . $doc_id . '.png');
+
+            // Generate a data URI to include image data inline (i.e. inside an <img> tag)
+            $dataUri = $result->getDataUri();
+
+            $data = [
+                'qr' =>  $dataUri
+            ];
+            $result = $documentModel->where('id', $doc_id)->update($doc_id, $data);
     }
 }

@@ -52,7 +52,7 @@
                 <div class="otp hidden">
                     <div class="mb-6">
                         <label class="block mb-2 font-semibold" for="password">OTP:</label>
-                        <input type="text" class="w-full px-4 py-2 rounded-md border-2" name="otp" id="otp" placeholder="Enter OTP" />
+                        <input type="text" class="w-full px-4 py-2 rounded-md border-2" name="otp" id="otp" placeholder="Enter OTP" required/>
                     </div>
                     <div class="mb-6">
                         <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md w-full flex items-center justify-center" type="submit" id="submit" disabled>
