@@ -10,57 +10,73 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 bg-success" style="margin-top:30px">
-                <div class="text-center p-4 font-bold text-white">
-                    Dashboard
+    <div class="mx-auto">
+        <!-- Sticky Navbar -->
+        <div class="sticky top-0 z-50">
+            <div class="bg-gray-900 text-white py-2 px-10 justify-end">
+                <?php include_once(dirname(__FILE__) . '/../../common/user-navbar.php'); ?>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex mt-4">
+            <div class="w-60 h-screen p-4">
+                <!-- Sidebar content here -->
+                <?php include_once(dirname(__FILE__) . '/../../common/user-sidebar.php'); ?>
+            </div>
+            <div class="ml-1 flex-grow">
+                <div class="flex justify-center mt-8">
+                    <div class="bg-green-500 p-4 font-bold text-white rounded-md">
+                        REQUEST DOCUMENT
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <!-- <a href="<?= site_url('profile'); ?>">Profile</a> -->
+    
+                    <div class="w-full md:w-1/2 py-5">
+                        <h4 class="text-center">Request Document</h4>
+                        <?= csrf_field(); ?>
+                        <?php if (!empty(session()->getFlashdata('fail'))): ?>
+                            <div class="bg-red-500 text-white p-3 mb-4">
+                                <?= session()->getFlashdata('fail') ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php if (!empty(session()->getFlashdata('success'))): ?>
+                            <div class="bg-green-500 text-white p-3 mb-4">
+                                <?= session()->getFlashdata('success') ?>
+                            </div>
+                        <?php endif ?>
+                        <form method="post" action="<?php echo base_url('request'); ?>" enctype="multipart/form-data">
+                            <div class="mb-4">
+                                <label for="receipient" class="block">Receipient</label>
+                                <input type="text" class="hidden" name="sender" value="<?= session()->get('name') ?>" />
+                                <select class="w-full border border-gray-300 p-2 rounded" name="receipient"
+                                    id="receipient">
+                                    <option>Select Receipient</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="subject" class="block">Subject</label>
+                                <input type="text" class="w-full border border-gray-300 p-2 rounded" name="subject"
+                                    required />
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="block">Description</label>
+                                <input type="text" class="w-full border border-gray-300 p-2 rounded" name="description"
+                                    required />
+                            </div>
+                            <div class="mb-4">
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Request</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <a href="<?= site_url('usercompose'); ?>">Compose</a>
-            <a href="<?= site_url(session()->get('userRole')); ?>/<?= session()->get('loggedUser'); ?>">Dashboard</a>
-            <a href="<?= site_url('profile'); ?>">Profile</a>
-            <a href="<?= site_url('logout'); ?>">Logout</a>
-            <div class="col-md-4 col-md-offset-4 py-5">
-                <h4>Request Document</h4>
-                <?= csrf_field(); ?>
-                <?php if (!empty(session()->getFlashdata('fail'))) : ?>
-                    <div class="alert alert-danger"><?= session()->getFlashdata('fail') ?></div>
-                <?php endif ?>
-
-                <?php if (!empty(session()->getFlashdata('success'))) : ?>
-                    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
-                <?php endif ?>
-                <form method="post" action="<?php echo base_url('request'); ?>" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="">Receipient</label>
-                        <input type="text" class="form-control" name="sender" value="<?= session()->get('name') ?>" hidden />
-                        <select class="form-control" name="receipient" id="receipient">
-                            <option>Select Receipient</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Subject</label>
-                        <input type="text" class="form-control" name="subject" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="">Description</label>
-                        <input type="text" class="form-control" name="description" required />
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-danger">Request</button>
-                    </div>
-            </div>
-            </form>
-        </div>
-    </div>
-    </div>
 </body>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         loadUsers();
     });
 
@@ -68,9 +84,9 @@
         $.ajax({
             method: "GET",
             url: "/users",
-            success: function(response) {
+            success: function (response) {
                 console.log(response.users);
-                $.each(response.users, function(key, value) {
+                $.each(response.users, function (key, value) {
                     $("#receipient").append(
                         `
                             <option value="${value["name"]}">${value["name"]}</option>

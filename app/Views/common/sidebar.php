@@ -57,6 +57,11 @@
         <i class="bi bi-bookmark-fill"></i>
         <span class="text-[15px] ml-4 text-gray-200">Compose</span>
       </a>
+      <a href="<?= site_url('request'); ?>"
+        class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 hover:bg-blue-600">
+        <i class="bi bi-file-earmark-arrow-down-fill"></i>
+        <span class="text-[15px] ml-4 text-gray-200">Request</span>
+      </a>
       <a href="<?= site_url('register'); ?>"
         class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 hover:bg-blue-600">
         <i class="bi bi-pencil-fill"></i>
@@ -68,16 +73,16 @@
         <span class="text-[15px] ml-4 text-gray-200">Trash</span>
       </a>
       <hr class="my-4 text-gray-600">
-      <a href="<?= site_url('messages'); ?>"
+      <!-- <a href="<?= site_url('messages'); ?>"
         class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 hover:bg-blue-600">
         <i class="bi bi-envelope-fill"></i>
         <span class="text-[15px] ml-4 text-gray-200">Messages</span>
-      </a>
-      <a href="<?= site_url('logout'); ?>"
+      </a> -->
+      <!-- <a href="<?= site_url('logout'); ?>"
         class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 hover:bg-blue-600">
         <i class="bi bi-box-arrow-in-right"></i>
         <span class="text-[15px] ml-4 text-gray-200">Logout</span>
-      </a>
+      </a> -->
 
     </div>
   </div>

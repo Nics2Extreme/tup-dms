@@ -28,8 +28,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class ConfigBuilderCacheWarmer implements CacheWarmerInterface
 {
-    private $kernel;
-    private $logger;
+    private KernelInterface $kernel;
+    private ?LoggerInterface $logger;
 
     public function __construct(KernelInterface $kernel, LoggerInterface $logger = null)
     {
@@ -38,8 +38,6 @@ class ConfigBuilderCacheWarmer implements CacheWarmerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string[]
      */
     public function warmUp(string $cacheDir): array
@@ -55,9 +53,7 @@ class ConfigBuilderCacheWarmer implements CacheWarmerInterface
             try {
                 $this->dumpExtension($extension, $generator);
             } catch (\Exception $e) {
-                if ($this->logger) {
-                    $this->logger->warning('Failed to generate ConfigBuilder for extension {extensionClass}.', ['exception' => $e, 'extensionClass' => \get_class($extension)]);
-                }
+                $this->logger?->warning('Failed to generate ConfigBuilder for extension {extensionClass}: '.$e->getMessage(), ['exception' => $e, 'extensionClass' => $extension::class]);
             }
         }
 
@@ -81,9 +77,6 @@ class ConfigBuilderCacheWarmer implements CacheWarmerInterface
         $generator->build($configuration);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptional(): bool
     {
         return true;

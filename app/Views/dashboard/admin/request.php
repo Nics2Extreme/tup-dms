@@ -7,23 +7,36 @@
     <title>How To File Upload in Codeigniter 4 Example Tutorial - Nicesnippets.com</title>
     <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 bg-success" style="margin-top:30px">
-                <div class="text-center p-4 font-bold text-white">
-                    Dashboard
-                </div>
+<div class="mx-auto">
+        <!-- Sticky Navbar -->
+        <div class="sticky top-0 z-50">
+            <div class="bg-gray-900 text-white py-2 px-10 justify-end">
+                <?php include_once(dirname(__FILE__) . '/../../common/navbar.php'); ?>
             </div>
         </div>
 
+        <!-- Main Content -->
+        <div class="flex mt-4">
+            <div class="w-60 h-screen p-4">
+                <!-- Sidebar content here -->
+                <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
+            </div>
+            <div class="ml-1 flex-grow">
+                <div class="flex justify-center mt-8">
+                    <div class="bg-green-500 p-4 font-bold text-white rounded-md">
+                        Dashboard
+                    </div>
+                </div>
+
         <div class="row">
-            <a href="<?= site_url('compose'); ?>">Compose</a>
+            <!-- <a href="<?= site_url('compose'); ?>">Compose</a>
             <a href="<?= site_url(session()->get('userRole')); ?>/<?= session()->get('loggedUser'); ?>">Dashboard</a>
             <a href="<?= site_url('register'); ?>">Register</a>
-            <a href="<?= site_url('logout'); ?>">Logout</a>
+            <a href="<?= site_url('logout'); ?>">Logout</a> -->
             <div class="col-md-4 col-md-offset-4 py-5">
                 <h4>Request Document</h4>
                 <?= csrf_field(); ?>
