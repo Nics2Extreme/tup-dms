@@ -10,7 +10,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
-<<<<<<< HEAD
 
 <body class="bg-slate-100">
     <div class="flex items-center justify-center h-screen">
@@ -53,45 +52,13 @@
                     </button>
                 </div>
             </form>
-=======
-
-<body>
-    <div class="container">
-        <div class="row" style="margin-top:45px">
-            <div class="col-md-4 col-md-offset-4">
-                <h4>Sign In</h4>
-                <?= csrf_field(); ?>
-                <?php if (!empty(session()->getFlashdata('fail'))) : ?>
-                    <div class="alert alert-danger"><?= session()->getFlashdata('fail') ?></div>
-                <?php endif ?>
-
-                <form action="<?= base_url('check') ?>" method="post">
-                    <div class="form-group">
-                        <label for="">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Enter your email" value="<?= set_value('email'); ?>" />
-                        <small class="text-danger"><?= isset($validation) ? display_error($validation, 'email') : '' ?></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Enter your password" />
-                        <small class="text-danger"><?= isset($validation) ? display_error($validation, 'password') : '' ?></small>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block" type="submit">Sign In</button>
-                    </div>
-                </form>
-            </div>
->>>>>>> 4197850ed52b77ecc82608e22150db4f789c786f
         </div>
     </div>
 </body>
 
-<<<<<<< HEAD
 
 
 
 </body>
 
-=======
->>>>>>> 4197850ed52b77ecc82608e22150db4f789c786f
 </html>
