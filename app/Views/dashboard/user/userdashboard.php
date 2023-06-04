@@ -12,7 +12,11 @@
 
 <body>
 
-    <div class="container">
+    <div class="container mx-auto flex">
+        <div class="w-60 h-screen p-4">
+            <!-- Sidebar content here -->
+            <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+        </div>
         <div class="row">
             <div class="col-md-8 offset-md-2 bg-success" style="margin-top:30px">
                 <div class="text-center p-4 font-bold text-white">
@@ -21,10 +25,10 @@
             </div>
         </div>
         <div class="row">
-            <a href="<?= site_url('usercompose'); ?>">Compose</a>
+            <!-- <a href="<?= site_url('usercompose'); ?>">Compose</a>
             <a href="<?= site_url('userrequest'); ?>">Request</a>
             <a href="<?= site_url('profile'); ?>">Profile</a>
-            <a href="<?= site_url('logout'); ?>">Logout</a>
+            <a href="<?= site_url('logout'); ?>">Logout</a> -->
             <div class="col-md-8 offset-md-2">
                 <h1>Welcome <?= $userInfo['name']; ?>!</h1>
             </div>

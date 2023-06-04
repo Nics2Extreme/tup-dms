@@ -6,9 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    public string $fromEmail  = '';
-    public string $fromName   = '';
-    public string $recipients = '';
+    public string $fromEmail;
+    public string $fromName;
+    public string $recipients;
 
     /**
      * The "user agent"
@@ -16,34 +16,9 @@ class Email extends BaseConfig
     public string $userAgent = 'CodeIgniter';
 
     /**
-     * The mail sending protocol: mail, sendmail, smtp
-     */
-    public string $protocol = 'mail';
-
-    /**
      * The server path to Sendmail.
      */
     public string $mailPath = '/usr/sbin/sendmail';
-
-    /**
-     * SMTP Server Address
-     */
-    public string $SMTPHost = '';
-
-    /**
-     * SMTP Username
-     */
-    public string $SMTPUser = '';
-
-    /**
-     * SMTP Password
-     */
-    public string $SMTPPass = '';
-
-    /**
-     * SMTP Port
-     */
-    public int $SMTPPort = 25;
 
     /**
      * SMTP Timeout (in seconds)
@@ -56,11 +31,6 @@ class Email extends BaseConfig
     public bool $SMTPKeepAlive = false;
 
     /**
-     * SMTP Encryption. Either tls or ssl
-     */
-    public string $SMTPCrypto = 'tls';
-
-    /**
      * Enable word-wrap
      */
     public bool $wordWrap = true;
@@ -69,11 +39,6 @@ class Email extends BaseConfig
      * Character count to wrap at
      */
     public int $wrapChars = 76;
-
-    /**
-     * Type of mail, either 'text' or 'html'
-     */
-    public string $mailType = 'text';
 
     /**
      * Character set (utf-8, iso-8859-1, etc.)
@@ -114,4 +79,12 @@ class Email extends BaseConfig
      * Enable notify message from server
      */
     public bool $DSN = false;
+
+    public $protocol = 'smtp';
+    public $SMTPHost = 'smtp.zoho.com';
+    public $SMTPUser = 'jnics016@zohomail.com';
+    public $SMTPPass = 'B9KbceGFnATM';
+    public $SMTPPort = 465;
+    public $SMTPCrypto = 'ssl';
+    public $mailType = 'html';
 }

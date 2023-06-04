@@ -46,6 +46,7 @@ $routes->get('/logout', 'Auth::getLogout');
 
 $routes->post('/check', 'Auth::postCheck');
 $routes->post('/save', 'Dashboard::postSave');
+$routes->post('/otp', 'OTPController::otp');
 
 $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
 
@@ -56,6 +57,9 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->post('/receive', 'DocumentController::receive');
     $routes->post('/request', 'DocumentController::request');
     $routes->post('/send', 'DocumentController::send');
+    $routes->get('/notif', 'Notifications::getNotifications');
+    $routes->post('/fetchnotif/(:segment)', 'Notifications::postNotification/$1');
+    $routes->post('/createnotif', 'Notifications::postNewNotification');
 
     $routes->group('', ['filter' => 'UserFilter'], function ($routes) {
         $routes->get('/user/(:segment)', 'Dashboard::getUserDashboard');
