@@ -49,7 +49,7 @@ class Auth extends BaseController
             $check_otp = $userModel->where('otp', $otp)->first();
 
             $check_password = Hash::check($password, $user_info['password']);
-            if (!$check_password) return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorect password.')->withInput();
+            if (!$check_password) return  redirect()->to('login', null, 'refresh')->with('fail', 'Incorrect password.')->withInput();
 
             if (!$check_otp) return redirect()->to('login', null)->with('fail', 'Wrong code. Please check your mail to get the new valid code.');
 
