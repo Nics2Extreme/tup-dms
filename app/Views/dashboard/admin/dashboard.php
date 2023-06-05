@@ -38,7 +38,7 @@
                     <table
                         class="table-auto bg-slate-200 w-full rounded-lg overflow-hidden shadow-lg border-2 border-slate-400">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Doc. Code</th>
                                 <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Sender</th>
                                 <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Details</th>
@@ -71,7 +71,7 @@
                     $.each(response.documents, function (key, value) {
                         if (value.status !== "2") {
                             $("#documents").append(`
-                                <tr>
+                                <tr class="justify-center">
                                     <td scope="row">${value["id"]}</td>
                                     <td>${value["sender"]}</td>
                                     <td>${value["description"]}</td>
@@ -79,7 +79,7 @@
                                     <td>${value["createdAt"]}</td>
                                     <td>${value["status"] === "0" ? "Pending" : "Received"}</td>
                                     <td>
-                                        <div class="flex">
+                                        <div class="flex justify-center">
                                             <a href="<?= site_url('document'); ?>/${value["id"]}" class="badge btn-info view_btn bg-blue-600 hover:text-gray-800 text-white font-bold py-2 px-4 mr-2 rounded"><i class="bi bi-eye-fill"></i></a>
                                             <a href="<?= site_url('trash-document'); ?>/${value["id"]}" class="badge btn-info view_btn bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 mr-2 rounded"><i class="bi bi-trash2-fill"></i></a>
                                         </div>

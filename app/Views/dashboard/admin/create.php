@@ -12,7 +12,7 @@
 
 <body class="bg-slate-100">
     <div class="container flex mx-auto justify-end">
-        <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+        <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
         <div class="w-4/5">
             <div class="container mx-auto">
                 <div class="flex justify-center mt-2">

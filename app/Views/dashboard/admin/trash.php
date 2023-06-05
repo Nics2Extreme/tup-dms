@@ -14,7 +14,7 @@
 <div class="flex">
     <div class="w-60 h-screen p-4 bg-gray-200">
         <!-- Sidebar content here -->
-        <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+        <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
     </div>
     <div class="flex-grow pl-8 pr-4">
         <div class="mt-8">

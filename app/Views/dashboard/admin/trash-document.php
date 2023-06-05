@@ -17,7 +17,7 @@
         <!-- Sidebar -->
         <div class="w-64 ">
             <!-- Sidebar content here -->
-            <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+            <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
         </div>
 
         <!-- Main Content -->
