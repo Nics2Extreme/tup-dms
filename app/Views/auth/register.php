@@ -11,8 +11,8 @@
 </head>
 
 <body>
-    <div class="flex mx-auto justify-end">
-        <div class="mx-auto w-full">
+    <div class=" mx-auto">
+        <div class="w-full">
             <!-- Sticky Navbar -->
             <div class="sticky top-0 z-50">
                 <div class="bg-gray-900 text-white py-2 px-10 justify-end">
@@ -21,14 +21,14 @@
             </div>
 
             <!-- Main Content -->
-            <div class="container flex mt-8 mb-">
-                <div class="w-1/4 h-screen pr-4">
+            <div class="flex">
+                <div class="w-1/4 h-screen">
                     <!-- Sidebar content here -->
                     <?php include_once(dirname(__FILE__) . '/../common/sidebar.php'); ?>
                 </div>
-                <div class="ml-64 flex justify-center mt-8">
-                    <div class=" bg-white rounded-lg shadow-lg p-6 border-2 border-slate-400">
-                        <h4 class="text-2xl font-bold mb-6">Sign Up</h4>
+                <div class="flex items-center ml-32 flex-grow">
+                    <div class="w-3/4 bg-white rounded-lg shadow-lg p-10 border-2 border-slate-400">
+                        <h4 class="text-2xl font-bold mb-6 text-center">Sign Up</h4>
                         <?= csrf_field(); ?>
                         <?php if (!empty(session()->getFlashdata('fail'))): ?>
                             <div class="bg-red-200 text-red-800 px-4 py-2 rounded mb-4">
@@ -40,7 +40,7 @@
                                 <?= session()->getFlashdata('success') ?>
                             </div>
                         <?php endif ?>
-                        <form action="<?= base_url('save') ?>" method="post">
+                        <form action="<?= base_url('save') ?>" method="post" class="w-full">
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700 font-bold">Name</label>
                                 <input type="text" class="form-input w-full border border-gray-300 rounded px-4 py-2"
@@ -83,8 +83,8 @@
                                     <?= isset($validation) ? display_error($validation, 'cpassword') : '' ?>
                                 </span>
                             </div>
-                            <div class="mb-4">
-                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full"
+                            <div class="mb-4 items-center justify-center">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white w-1/2 ml-60 px-6 py-2 rounded-lg"
                                     type="submit">Sign Up</button>
                             </div>
                         </form>

@@ -34,7 +34,7 @@
                         Dashboard
                     </div>
                 </div>
-                <div class="container flex-gro justify-center overflow-x-auto px-20 mt-8 rounded-md">
+                <div class="container flex-grow justify-center overflow-x-auto px-20 mt-8 rounded-md">
                     <table
                         class="table-auto bg-slate-200 w-full rounded-lg overflow-hidden shadow-lg border-2 border-slate-400">
                         <thead>
@@ -48,7 +48,7 @@
                                 <th class="w-1/6 py-2 text-left bg-gray-800 text-white">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="documents">
+                        <tbody id="documents" class="bg-gray-300">
                             <!-- Table rows here -->
                         </tbody>
                     </table>

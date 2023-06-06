@@ -20,21 +20,15 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex mt-4">
+        <div class="flex">
             <div class="w-60 h-screen p-4">
                 <!-- Sidebar content here -->
                 <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
             </div>
             <div class="ml-1 flex-grow">
                 <div class="flex justify-center mt-8">
-                    <div class="bg-green-500 p-4 font-bold text-white rounded-md">
-                        Dashboard
-                    </div>
-                </div>
-
-                <div class="flex justify-center">
-                    <div class="w-1/2 py-5">
-                        <h4 class="text-center">Request Document</h4>
+                    <div class="w-1/2 bg-white rounded-lg shadow-lg  border-2 border-slate-400">
+                        <h4 class="text-2xl font-bold mb-6 text-center">Request Document</h4>
                         <?= csrf_field(); ?>
                         <?php if (!empty(session()->getFlashdata('fail'))): ?>
                             <div class="alert alert-danger">
@@ -50,33 +44,33 @@
                         <form method="post" action="<?php echo base_url('request'); ?>" enctype="multipart/form-data"
                             class="max-w-md mx-auto">
                             <div class="mb-4">
-                                <label for="sender" class="block">Sender</label>
+                                <label for="sender" class="block font-bold text-gray-700">Sender</label>
                                 <input type="text" class="form-input" name="sender"
                                     value="<?= session()->get('name') ?>" hidden />
-                                <select class="form-select w-full rounded-lg border-2" name="receipient" id="receipient">
+                                <select class="form-select w-full rounded-lg border-2" name="receipient"
+                                    id="receipient">
                                     <option>Select Recipient</option>
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label for="subject" class="block">Subject</label>
+                                <label for="subject" class="block font-bold text-gray-700">Subject</label>
                                 <input type="text" class="border border-gray-300 rounded-md p-2 w-full" name="subject"
                                     required />
                             </div>
                             <div class="mb-4">
                                 <label for="description" class="block">Description</label>
-                                <input type="text" class="border border-gray-300 rounded-md p-2 w-full"
-                                    name="description" required />
+                                <textarea class="border border-gray-300 rounded-md p-2 w-full resize-none"
+                                    name="description" required></textarea>
                             </div>
                             <div class="flex justify-center">
                                 <button type="submit"
-                                    class="bg-red-500 text-white py-2 px-4 rounded-md">Request</button>
+                                    class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md">Request</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
-
             </div>
+
         </div>
 </body>
 <script>
