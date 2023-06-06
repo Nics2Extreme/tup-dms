@@ -51,7 +51,7 @@
             <div class="relative">
                 <input type="checkbox" name="menu" class="hidden" id="showlinknav" checked>
                 <label for="showlinknav" class="cursor-pointer p-2" id="open_menu" onclick="navshowlink();">
-                    <?= $userInfo['name']; ?>! <i class="text-sm bi bi-chevron-down"></i>
+                     <i class="text-sm bi bi-chevron-down"></i>
                 </label>
                 <ul class="absolute border-2 hidden mt-2 right-0 bg-white rounded-lg shadow-lg p-2 w-40 transition-opacity duration-300 opacity-0"
                     id="dropdown_menu">

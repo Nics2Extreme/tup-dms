@@ -13,15 +13,21 @@
 </head>
 
 <body ">
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-64 ">
-            <!-- Sidebar content here -->
-            <?php include_once(dirname(__FILE__) . '/../../common/header.php'); ?>
+     <div class=" mx-auto">
+    <!-- Sticky Navbar -->
+    <div class="sticky top-0 z-50">
+        <div class="bg-gray-900 text-white py-2 px-10 justify-end">
+            <?php include_once(dirname(__FILE__) . '/../../common/navbar.php'); ?>
         </div>
+    </div>
 
-        <!-- Main Content -->
-        <div class="flex-grow flex items-center justify-center">
+    <!-- Main Content -->
+    <div class="flex mt-4">
+        <div class="w-60 h-screen p-4">
+            <!-- Sidebar content here -->
+            <?php include_once(dirname(__FILE__) . '/../../common/sidebar.php'); ?>
+        </div>
+        <div class="flex flex-col items-center justify-center h-screen w-full pb-60">
             <div class="w-1/2">
                 <div class="text-4xl font-bold mb-8 py-5 px-11 flex items-center justify-center">
                     Trash <i class="bi bi-trash-fill"></i>
@@ -33,6 +39,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
